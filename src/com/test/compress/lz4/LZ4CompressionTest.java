@@ -8,6 +8,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LZ4CompressionTest {
 //    LZ4Factory factory = LZ4Factory.fastestInstance();
@@ -33,7 +35,7 @@ public class LZ4CompressionTest {
         }
     }*/
 
-    public void compressLZ4(String filename, String lz4file) {
+    public Map<String, Long> compressLZ4(String filename, String lz4file) {
         long startTime = System.currentTimeMillis();
         byte[] buf = new byte[2048];
         try {
@@ -64,6 +66,9 @@ public class LZ4CompressionTest {
         }
         long endTime = System.currentTimeMillis();
         System.out.println("LZ4compress Run Time: " + (endTime - startTime) + "ms");
+        Map<String, Long> result = new HashMap<>();
+        result.put("time", endTime - startTime);
+        return result;
     }
 
     /*public void compressLZ4V2(String filename, String lz4file) {

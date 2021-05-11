@@ -5,6 +5,8 @@ import com.test.compress.lz4.LZ4CompressionTest;
 import com.test.compress.lzo.LZOCompressionTest;
 import com.test.compress.zstd.ZSTDCompressionTest;
 
+import java.util.Map;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -66,10 +68,31 @@ public class Main {
             lz4CompressionTest.decompressLZ4("./src/resources/lz4tmp/kubeInfo_test_"+ i + ".lz4", "./src/resources/lz4tmp/kubeInfo_test_lz4_" + i + ".json");
         }*/
 
-        for(int i = 0; i < 100; i++) {
+        Long testlz4 = 0L;
+        for(int i = 0; i < 1000; i++) {
             System.out.println("----");
-            zstdCompressionTest.compressZSTD("./src/resources/kubeinfo_test.json", "./src/resources/zstdtmp/kubeInfo_test_"+ i + ".zstd");
+
+            Map<String, Long> result = lz4CompressionTest.compressLZ4("./src/resources/kubeInfo_test.json", "./src/resources/lz4tmp/kubeInfo_test.lz4");
+            testlz4 += result.get("time");
+            lz4CompressionTest.decompressLZ4("./src/resources/lz4tmp/kubeInfo_test.lz4", "./src/resources/lz4tmp/kubeInfo_test_lz4.json");
+        }
+
+
+
+        Long testzstd = 0L;
+        for(int i = 0; i < 1000; i++) {
+            System.out.println("----");
+
+            Map<String, Long> result = zstdCompressionTest.compressZSTD("./src/resources/kubeinfo_test.json", "./src/resources/zstdtmp/kubeInfo_test_"+ i + ".zstd");
+            testzstd += result.get("time");
             zstdCompressionTest.decompressZSTD("./src/resources/zstdtmp/kubeInfo_test_"+ i + ".zstd", "./src/resources/zstdtmp/kubeInfo_test_zstd_" + i + ".json");
         }
+
+
+        System.out.println("test: " + testlz4);
+        System.out.println("test: " + testlz4 / 500L);
+
+        System.out.println("test: " + testzstd);
+        System.out.println("test: " + testzstd / 500L);
     }
 }
