@@ -2,17 +2,15 @@ package com.test.compress.lz4;
 
 import net.jpountz.lz4.LZ4BlockInputStream;
 import net.jpountz.lz4.LZ4BlockOutputStream;
-import net.jpountz.lz4.LZ4Compressor;
-import net.jpountz.lz4.LZ4Factory;
-import org.apache.commons.io.IOUtils;
+import org.apache.commons.compress.compressors.lz4.*;
 
-import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class LZ4CompressionTest {
-    LZ4Factory factory = LZ4Factory.fastestInstance();
-
+//    LZ4Factory factory = LZ4Factory.fastestInstance();
 
     /*public void compressLZ4() {
         try {
@@ -50,6 +48,7 @@ public class LZ4CompressionTest {
             long out_startTime = System.currentTimeMillis();
 //            LZ4BlockOutputStream out = new LZ4BlockOutputStream(new FileOutputStream(lz4file), 32*1024*1024);
             LZ4BlockOutputStream out = new LZ4BlockOutputStream(new FileOutputStream(lz4file));
+//            BlockLZ4CompressorOutputStream out = new BlockLZ4CompressorOutputStream(new FileOutputStream(lz4file));
             int len;
             while((len = in.read(buf)) > 0){
                 out.write(buf, 0, len);
@@ -67,7 +66,7 @@ public class LZ4CompressionTest {
         System.out.println("LZ4compress Run Time: " + (endTime - startTime) + "ms");
     }
 
-    public void compressLZ4V2(String filename, String lz4file) {
+    /*public void compressLZ4V2(String filename, String lz4file) {
         File f1 = new File(filename);
         File f2 = new File(lz4file);
 
@@ -110,13 +109,14 @@ public class LZ4CompressionTest {
         } catch(Exception e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     public void decompressLZ4(String lz4file, String filename) {
         long startTime = System.currentTimeMillis();
         byte[] buf = new byte[2048];
         try {
             LZ4BlockInputStream in = new LZ4BlockInputStream(new FileInputStream(lz4file));
+//            BlockLZ4CompressorInputStream in = new BlockLZ4CompressorInputStream(new FileInputStream(lz4file));
             FileOutputStream out = new FileOutputStream(filename);
             int len;
             while((len = in.read(buf)) > 0){

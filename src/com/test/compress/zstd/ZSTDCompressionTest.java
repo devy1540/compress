@@ -1,7 +1,7 @@
 package com.test.compress.zstd;
 
-import com.github.luben.zstd.ZstdInputStream;
-import com.github.luben.zstd.ZstdOutputStream;
+import org.apache.commons.compress.compressors.zstandard.ZstdCompressorInputStream;
+import org.apache.commons.compress.compressors.zstandard.ZstdCompressorOutputStream;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -21,7 +21,8 @@ public class ZSTDCompressionTest {
             System.out.println(in.getChannel().size());
 
             long out_startTime = System.currentTimeMillis();
-            ZstdOutputStream out = new ZstdOutputStream(new FileOutputStream(ZSTDFileName));
+//            ZstdOutputStream out = new ZstdOutputStream(new FileOutputStream(ZSTDFileName));
+            ZstdCompressorOutputStream out = new ZstdCompressorOutputStream(new FileOutputStream(ZSTDFileName));
             int len;
             while((len = in.read(buf)) > 0){
                 out.write(buf, 0, len);
@@ -40,7 +41,8 @@ public class ZSTDCompressionTest {
         long startTime = System.currentTimeMillis();
         byte[] buf = new byte[2048];
         try {
-            ZstdInputStream in = new ZstdInputStream(new FileInputStream(ZSTDFileName));
+//            ZstdInputStream in = new ZstdInputStream(new FileInputStream(ZSTDFileName));
+            ZstdCompressorInputStream in = new ZstdCompressorInputStream(new FileInputStream(ZSTDFileName));
             FileOutputStream out = new FileOutputStream(fileName);
             int len;
             while((len = in.read(buf)) > 0){

@@ -1,7 +1,5 @@
 package com.test.compress.gzip;
 
-import com.github.luben.zstd.ZstdInputStream;
-
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.zip.GZIPInputStream;
